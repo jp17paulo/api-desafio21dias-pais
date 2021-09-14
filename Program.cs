@@ -11,7 +11,8 @@ namespace api_desafio21dias
 {
     public class Program
     {
-        public static string AlunosApi = null;
+        public static string AlunoApi = null;
+        public static string MongoCnn = null;
         public static void Main(string[] args)
         {
             CreateHostBuilder(args).Build().Run();

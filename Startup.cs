@@ -1,17 +1,9 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using api_desafio21dias.Servicos;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 
 namespace api_desafio21dias
@@ -28,18 +20,16 @@ namespace api_desafio21dias
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            Program.AlunosApi = Configuration.GetConnectionString("AlunosApi");
-            string strCnn = Configuration.GetConnectionString("MinhaConexao");
-            services.AddDbContext<DbContexto>(options => options.UseSqlServer(strCnn));
+            Program.AlunoApi = Configuration.GetConnectionString("AlunosApi");
+            Program.MongoCnn = Configuration.GetConnectionString("MongoCnn");
 
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {
-                c.SwaggerDoc("v1", new OpenApiInfo
-                {
-                    Title = "Web API desafio 21 dias",
+                c.SwaggerDoc("v1", new OpenApiInfo { 
+                    Title = "Web API deafio 21 dias",
                     Version = "v1",
-                    Description = "Web API Feita para materiais no desafio 21 dias"
+                    Description = "Web API Feita para os pais dos alunos no desafio 21 dias"
                 });
             });
         }
@@ -51,10 +41,10 @@ namespace api_desafio21dias
             {
                 app.UseDeveloperExceptionPage();
             }
-
+        
             app.UseSwagger();
             app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Desafio 21 dias"));
-
+        
             app.UseHttpsRedirection();
 
             app.UseRouting();
